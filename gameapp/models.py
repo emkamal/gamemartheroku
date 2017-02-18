@@ -34,10 +34,10 @@ class Game(models.Model):
     price = models.FloatField()
 
 class Asset(models.Model):
-    asset_id = models.ForeignKey('User')
+    asset_id = models.ForeignKey('User') # need to be set not null false
     asset_type = models.CharField(max_length=50)
     url = models.URLField()
-    owner_id = models.ForeignKey('Game')
+    owner_id = models.ForeignKey('Game') # need to be set not null false
 
 class Gameplay(models.Model):
     player_id = models.ForeignKey('User')
