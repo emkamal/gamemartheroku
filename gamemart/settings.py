@@ -15,6 +15,7 @@ import os
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
+
 """added 22.1.2017 - for authentication"""
 AUTH_USER_MODEL = 'gameapp.User'
 
@@ -127,9 +128,15 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
 
+
+
 # Only when running in Heroku
 if "DYNO" in os.environ:
-    STATIC_ROOT = 'staticfiles'
+    # STATIC_ROOT = 'staticfiles'
+    PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
+    STATIC_ROOT = os.path.join(PROJECT_ROOT, 'staticfiles')
+    STATIC_URL = '/static/'
+
     import dj_database_url
     DATABASES['default'] =  dj_database_url.config()
 
