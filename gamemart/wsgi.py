@@ -10,6 +10,7 @@ https://docs.djangoproject.com/en/1.10/howto/deployment/wsgi/
 import os
 
 from django.core.wsgi import get_wsgi_application
+from whitenoise.django import DjangoWhiteNoise
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "gamemart.settings")
 
@@ -17,5 +18,6 @@ os.environ.setdefault("DJANGO_SETTINGS_MODULE", "gamemart.settings")
 if "DYNO" in os.environ:
     from dj_static import Cling
     application = Cling(get_wsgi_application())
+    application = DjangoWhiteNoise(application)
 else:
     application = get_wsgi_application()
