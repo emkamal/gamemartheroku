@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block title %}Edit Biography{% endblock %}
+
+{% block content %}
+<p>Current biography: {{ user.bio }}</p>
+<p>Give new biography </p>
+<form action="/changeBio/" method="post">
+ {% csrf_token %}
+    <input class="form-control" id="id_bio" type="text" name="bio" value="{{ bio_form.bio }}"/>
+    {{ bio_form.bio.errors }}
+    <button type="submit">Change</button>
+</form>
+
+ {% endblock %}

@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+    <h1>Dashboard</h1>
+    <p>Welcome to your dashboard.</p>
+
+    <table class="user_dashboard">
+     <tr>
+       <td id="bolded">Username:</td>
+       <td>{{ user.username }}</td>
+       <td></td>
+     </tr>
+     <tr>
+       <td id="bolded">Firstname:</td>
+       <td>{{ user.first_name }}</td>
+       <td><a href="{% url 'editFirstName' %}">Edit</td>
+     </tr>
+     <tr>
+       <td id="bolded">Lastname:</td>
+       <td>{{ user.last_name }}</td>
+       <td><a href="{% url 'editLastName' %}">Edit</td>
+     </tr>
+     <tr>
+       <td id="bolded">Email:</td>
+       <td>{{ user.email }}</td>
+       <td><a href="{% url 'editEmail' %}">Edit</td>
+     </tr>
+     <tr>
+       <td id="bolded">Biography:</td>
+       <td>{{ user.bio }}</td>
+       <td><a href="{% url 'editBio' %}">Edit</td>
+     </tr>
+     <tr>
+       <td id="bolded">Date joided:</td>
+       <td>{{ user.date_joined }}</td>
+       <td></td>
+     </tr>
+     <tr>
+       <td id="bolded">Last login:</td>
+       <td>{{ user.last_login }}</td>
+       <td></td>
+     </tr>
+   </table>
+
+
+
+
+
+
+
+{% endblock %}

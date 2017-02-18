@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block title %}{{page_title}}{% endblock %}
+{% block content %}
+{% load static %}
+<div class="container">
+  {% if games %}
+    <div id="products" class="row">
+      {% for game in games %}
+        <div class="item col-xs-12 col-sm-4 col-lg-4">
+            <div class="thumbnail">
+                <img class="group list-group-image" src="{{ game.banner_url }}" alt="no image" />
+                <div class="caption">
+                    <h4 class="group inner list-group-item-heading"><a href="{{BASE_URL}}/game/{{ game.slug }}">{{ game.title }}</a></h4>
+                    {# <p class="group inner list-group-item-text">{{game.desc|truncatechars:100}}</p>#}
+                    {% if not game.bought %}
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <p class="lead">€ {{ game.price }}</p>
+                        </div>
+                        <div class="col-xs-6 text-right">
+                            <a class="btn btn-success" href="http://www.jquery2dotnet.com">Buy</a>
+                        </div>
+                    </div>
+                    {% else %}
+                    <div class="row">
+                        <div class="col-xs-6">
+                        </div>
+                        <div class="col-xs-6 text-right">
+                            <a class="btn btn-success" href="{{BASE_URL}}/game/{{ game.slug }}">Play</a>
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+      {% endfor %}
+    </div>
+    {% include "games_pagination.html" with search=search_string %}
+  {% else %}
+  <div class="well well-lg">Too bad we have no {{page_title}} yet </div>
+  {% endif %}
+</div>
+{% endblock %}

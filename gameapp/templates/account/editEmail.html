@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block title %}Edit email{% endblock %}
+
+{% block content %}
+<p>Current email: {{ user.email }}</p>
+<p>Give new email </p>
+<form action="/changeEmail/" method="post">
+ {% csrf_token %}
+    {{ error }}
+    <input class="form-control" id="id_email" type="email" name="email" value="{{ email_form.email }}" required="" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,63}$"/>
+    {{ email_form.email.errors }}
+    <button type="submit">Change</button>
+</form>
+
+ {% endblock %}

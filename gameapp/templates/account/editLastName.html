@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block title %}Edit lastname{% endblock %}
+
+{% block content %}
+<p>Current lastname: {{ user.last_name }}</p>
+<p>Give new lastname: </p>
+<form action="/changeLastName/" method="post">
+ {% csrf_token %}
+    <input class="form-control" id="id_last_name" type="text" name="last_name" value="{{ last_name_form.last_name }}"/>
+    {{ last_name_form.last_name.errors }}
+    <button type="submit">Change</button>
+</form>
+
+ {% endblock %}
