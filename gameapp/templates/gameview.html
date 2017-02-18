@@ -31,7 +31,7 @@
         <img class="game-banner image-responsive" src="{{ game_banner_url }}" alt="{{ game.title }}" />
       {% endif %}
       <p>{{ game.desc }}</p>
-      {% if userIsLoggedIn %}
+      {% if userIsLoggedIn and game.instruction %}
         <h2>Instruction</h2>
         <p>{{ game.instruction }}</p>
       {% endif %}
