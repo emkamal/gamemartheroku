@@ -43,7 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.admin',
     #'social.apps.django_app.default',
-    'social_django',
+    # 'social_django',
     'gameapp',
     #'social.apps.django_app.default',
 ]
