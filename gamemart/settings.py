@@ -43,7 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.admin',
     #'social.apps.django_app.default',
-    # 'social_django',
+    'social_django',    #edited 19.2.2017
     'gameapp',
     #'social.apps.django_app.default',
 ]
@@ -58,7 +58,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     #'social.apps.django_app.middleware.SocialAuthExceptionMiddleware',
-    # 'social_django.middleware.SocialAuthExceptionMiddleware',
+    'social_django.middleware.SocialAuthExceptionMiddleware',   #edited 19.2.2017
 ]
 
 ROOT_URLCONF = 'gamemart.urls'
@@ -76,8 +76,8 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
                 #'social.apps.django_app.context_processors.backends',
                 #'social.apps.django_app.context_processors.login_redirect',
-                # 'social_django.context_processors.backends',
-                # 'social_django.context_processors.login_redirect',
+                'social_django.context_processors.backends',        #edited 19.2.2017
+                'social_django.context_processors.login_redirect',  #edited 19.2.2017
             ],
         },
     },
@@ -92,9 +92,9 @@ AUTHENTICATION_BACKENDS = (
     #'social.backends.github.GithubOAuth2',
     #'social.backends.twitter.TwitterOAuth',
     # #'social.backends.facebook.FacebookOAuth2',
-    # 'social_core.backends.github.GithubOAuth2',
-    # 'social_core.backends.twitter.TwitterOAuth',
-    # 'social_core.backends.facebook.FacebookOAuth2',
+    'social_core.backends.github.GithubOAuth2',     #edited 19.2.2017
+    'social_core.backends.twitter.TwitterOAuth',    #edited 19.2.2017
+    'social_core.backends.facebook.FacebookOAuth2', #edited 19.2.2017
     'django.contrib.auth.backends.ModelBackend',
 )
 
