@@ -29,6 +29,7 @@ SECRET_KEY = '4)unxp6%j1i)z!o2im2)=3r#nkf+rc4$r#w&4@cahc24k%l7if'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
+TEMPLATE_DEBUG = True
 
 ALLOWED_HOSTS = ["192.168.5.5", "127.0.0.1", "localhost"]
 
@@ -212,7 +213,7 @@ if "DYNO" in os.environ:
 	import dj_database_url
 	DATABASES['default'] =  dj_database_url.config()
 
-	DEBUG = False # False, once service is succesfully deployed
+	DEBUG = True # False, once service is succesfully deployed
 	ALLOWED_HOSTS = ['*']
 
 	STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
