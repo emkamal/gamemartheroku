@@ -1,0 +1,98 @@
+{% extends 'base.html' %}
+
+{% block title %}Edit profile{% endblock %}
+
+{% block content %}
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-6 col-sm-6 col-xs-12">
+
+    <h1>Edit profile</h1>
+    <p>Welcome to edit your profile.</p>
+
+      {% csrf_token %}
+
+      <!-- editing User Profile-->
+
+      <table class="user_dashboard table table-hover">
+       <tr>
+         <td id="bolded">Username:</td>
+         <td>{{ user.username }}</td>
+         <td></td>
+         <td></td>
+       </tr>
+
+         <!--editing user's first name-->
+
+       <tr>
+
+         <td id="bolded">Firstname:</td>
+         <td>{{ user.first_name }}</td>
+         <form action="/changeFirstName/" method="post">
+         {% csrf_token %}
+         <td><input  id="id_first_name" type="text" name="first_name" value="{{ first_name_form.first_name }}" placeholder='New Firstname'/>
+           {{ first_name_form.first_name.errors }}</td>
+         <td><button type="submit" class="btn btn-primary" >Change firstname</button></td>
+         </form>
+       </tr>
+    <!--editing user's last name-->
+
+       <tr>
+         <td id="bolded">Lastname:</td>
+         <td>{{ user.last_name }}</td>
+         <form action="/changeLastName/" method="post">
+         {% csrf_token %}
+         <td><input class="form-control" id="id_last_name" type="text" name="last_name" value="{{ last_name_form.last_name }}" placeholder='New lastname'/>
+           {{ last_name_form.last_name.errors }}</td>
+         <td><button type="submit" class="btn btn-primary">Change lastname</button></td>
+         </form>
+       </tr>
+
+        <!--editing user's email-->
+
+       <tr>
+         <td id="bolded">Email:</td>
+         <td>{{ user.email }}</td>
+         {{ error }}
+         <form action="/changeEmail/" method="post">
+         {% csrf_token %}
+         <td><input class="form-control" id="id_email" type="email" name="email" value="{{ email_form.email }}" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,63}$" placeholder='New email'/>
+           {{ email_form.email.errors }}</td>
+         <td><button type="submit" class="btn btn-primary">Change email</button></td>
+         </form>
+       </tr>
+
+    <!--editing user's Bio-->
+
+       <tr>
+         <td id="bolded">Biography:</td>
+         <td>{{ user.bio }}</td>
+         <form action="/changeBio/" method="post">
+         {% csrf_token %}
+         <td><input class="form-control" id="id_bio" type="text" name="bio" value="{{ bio_form.bio }}" placeholder="New Bio"/>
+           </td>
+         <td><button type="submit" class="btn btn-primary">Change bio</button></td>
+         </form>
+       </tr>
+       <tr>
+         <td id="bolded">Date joided:</td>
+         <td>{{ user.date_joined }}</td>
+         <td></td>
+         <td></td>
+       </tr>
+       <tr>
+         <td id="bolded">Last login:</td>
+         <td>{{ user.last_login }}</td>
+         <td></td>
+         <td></td>
+       </tr>
+     </table>
+     <!--<button type="submit">Save changes</button>-->
+   <!--</form>-->
+
+     </div>
+   </div>
+ </div>
+
+{% endblock %}

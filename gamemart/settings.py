@@ -15,9 +15,10 @@ import os
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-# For authentication purpose
+"""added 22.1.2017 - for authentication"""
 AUTH_USER_MODEL = 'gameapp.User'
 SOCIAL_AUTH_USER_MODEL = 'gameapp.User'
+
 SOCIAL_AUTH_SLUGIFY_USERNAMES = False
 
 # Quick-start development settings - unsuitable for production
@@ -34,52 +35,47 @@ ALLOWED_HOSTS = ["192.168.5.5", "127.0.0.1", "localhost"]
 
 # Application definition
 INSTALLED_APPS = [
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
+	'django.contrib.auth',
+	'django.contrib.contenttypes',
+	'django.contrib.sessions',
+	'django.contrib.messages',
+	'django.contrib.staticfiles',
 
-    #'social.apps.django_app.default',
-    'social_django', # TODO: not working on production server
-    'gameapp',
-    'django.contrib.admin',
-]
+	#'social.apps.django_app.default',
+	# 'social_django',	'gameapp',
+	#'social.apps.django_app.default',]
 
 MIDDLEWARE = [
-    'django.middleware.security.SecurityMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+	'django.middleware.security.SecurityMiddleware',
+	'django.contrib.sessions.middleware.SessionMiddleware',
+	'django.middleware.common.CommonMiddleware',
+	'django.middleware.csrf.CsrfViewMiddleware',
+	'django.contrib.auth.middleware.AuthenticationMiddleware',
+	'django.contrib.messages.middleware.MessageMiddleware',
+	'django.middleware.clickjacking.XFrameOptionsMiddleware',
 
-    # TODO: social middleware not working on production server
-    #'social.apps.django_app.middleware.SocialAuthExceptionMiddleware',
-    'social_django.middleware.SocialAuthExceptionMiddleware',
-]
+	# TODO: social middleware not working on production server
+	#'social.apps.django_app.middleware.SocialAuthExceptionMiddleware',
+	# 'social_django.middleware.SocialAuthExceptionMiddleware',]
 
 ROOT_URLCONF = 'gamemart.urls'
 
 TEMPLATES = [
-    {
-        'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ['gameapp/templates'],
-        'APP_DIRS': True,
-        'OPTIONS': {
-            'context_processors': [
-                'django.template.context_processors.debug',
-                'django.template.context_processors.request',
-                'django.contrib.auth.context_processors.auth',
-                'django.contrib.messages.context_processors.messages',
-                #'social.apps.django_app.context_processors.backends',
-                #'social.apps.django_app.context_processors.login_redirect',
-                'social_django.context_processors.backends',
-                'social_django.context_processors.login_redirect',
-            ],
-        },
-    },
+	{
+		'BACKEND': 'django.template.backends.django.DjangoTemplates',
+		'DIRS': ['gameapp/templates'],
+		'APP_DIRS': True,
+		'OPTIONS': {
+			'context_processors': [
+				'django.template.context_processors.debug',
+				'django.template.context_processors.request',
+				'django.contrib.auth.context_processors.auth',
+				'django.contrib.messages.context_processors.messages',
+				#'social.apps.django_app.context_processors.backends',
+				#'social.apps.django_app.context_processors.login_redirect',
+				# 'social_django.context_processors.login_redirect',			],
+		},
+	},
 ]
 
 # To access some global variable on the template
@@ -90,13 +86,9 @@ TEMPLATES[0]['OPTIONS']['context_processors'].append("gameapp.context_processors
 WSGI_APPLICATION = 'gamemart.wsgi.application'
 
 AUTHENTICATION_BACKENDS = (
-    #'social.backends.github.GithubOAuth2',
-    #'social.backends.twitter.TwitterOAuth',
-    #'social.backends.facebook.FacebookOAuth2',
-    'social_core.backends.github.GithubOAuth2',
-    'social_core.backends.twitter.TwitterOAuth',
-    'social_core.backends.facebook.FacebookOAuth2',
-    'django.contrib.auth.backends.ModelBackend',
+	#'social.backends.github.GithubOAuth2',
+	#'social.backends.twitter.TwitterOAuth',
+	# 'social_core.backends.facebook.FacebookOAuth2',	'django.contrib.auth.backends.ModelBackend',
 )
 
 # Social auth settings
@@ -110,18 +102,18 @@ SOCIAL_AUTH_FACEBOOK_KEY = '1780843878880223'  # App ID
 SOCIAL_AUTH_FACEBOOK_SECRET = '192eb87fedfd2441a75a2dedc8de5a26'
 
 SOCIAL_AUTH_PIPELINE = (
-    'social.pipeline.social_auth.social_details',
-    'social.pipeline.social_auth.social_uid',
-    'social.pipeline.social_auth.auth_allowed',
-    'social.pipeline.social_auth.social_user',
-    'social.pipeline.user.get_username',
-    'social.pipeline.user.create_user',
+	'social.pipeline.social_auth.social_details',
+	'social.pipeline.social_auth.social_uid',
+	'social.pipeline.social_auth.auth_allowed',
+	'social.pipeline.social_auth.social_user',
+	'social.pipeline.user.get_username',
+	'social.pipeline.user.create_user',
 
-    'gameapp.pipelines.create_slug',
+	'gameapp.pipelines.create_slug',
 
-    'social.pipeline.social_auth.associate_user',
-    'social.pipeline.social_auth.load_extra_data',
-    'social.pipeline.user.user_details',
+	'social.pipeline.social_auth.associate_user',
+	'social.pipeline.social_auth.load_extra_data',
+	'social.pipeline.user.user_details',
 )
 
 
@@ -129,14 +121,14 @@ SOCIAL_AUTH_PIPELINE = (
 # https://docs.djangoproject.com/en/1.10/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'gamemart',
-        'USER': 'gamemartdbadmin',
-        'PASSWORD': 'snowisdeliciouswithsyrup',
-        'HOST': '127.0.0.1',
-        'PORT': '5432',
-    }
+	'default': {
+		'ENGINE': 'django.db.backends.postgresql',
+		'NAME': 'gamemart',
+		'USER': 'gamemartdbadmin',
+		'PASSWORD': 'snowisdeliciouswithsyrup',
+		'HOST': '127.0.0.1',
+		'PORT': '5432',
+	}
 }
 
 
@@ -144,18 +136,18 @@ DATABASES = {
 # https://docs.djangoproject.com/en/1.10/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
-    {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
-    },
+	{
+		'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+	},
+	{
+		'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+	},
+	{
+		'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+	},
+	{
+		'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+	},
 ]
 
 
@@ -179,7 +171,7 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 
 # Some direct URL access for faster workaround of Django's slow URL reverse()
-BASE_URL = 'http://192.168.5.5'
+BASE_URL = 'http://gamemart.herokuapp.com''
 LOGIN_URL = 'login'
 LOGOUT_URL = 'logout'
 LOGIN_REDIRECT_URL = 'home_page'
@@ -187,6 +179,19 @@ LOGIN_REDIRECT_URL = 'home_page'
 # Paymet API settings
 PAYMENT_SECRET_KEY = '3195b7c7a372b31e6b1eaa8242f8dcfb';
 SELLER_ID = 'GameMartInc'
+
+# Only when running in Heroku
+if "DYNO" in os.environ:
+	# STATIC_ROOT = 'staticfiles'
+	PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
+	STATIC_ROOT = os.path.join(PROJECT_ROOT, 'static')
+	STATIC_URL = '/static/'
+
+	import dj_database_url
+	DATABASES['default'] =  dj_database_url.config()
+
+	DEBUG = False # False, once service is succesfully deployed
+    ALLOWED_HOSTS = ['*']
 
 # Email settings
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
