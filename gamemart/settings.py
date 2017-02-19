@@ -43,7 +43,8 @@ INSTALLED_APPS = [
 
 	#'social.apps.django_app.default',
 	# 'social_django',	'gameapp',
-	#'social.apps.django_app.default',]
+	#'social.apps.django_app.default',
+]
 
 MIDDLEWARE = [
 	'django.middleware.security.SecurityMiddleware',
@@ -56,7 +57,8 @@ MIDDLEWARE = [
 
 	# TODO: social middleware not working on production server
 	#'social.apps.django_app.middleware.SocialAuthExceptionMiddleware',
-	# 'social_django.middleware.SocialAuthExceptionMiddleware',]
+	# 'social_django.middleware.SocialAuthExceptionMiddleware',
+]
 
 ROOT_URLCONF = 'gamemart.urls'
 
@@ -73,7 +75,8 @@ TEMPLATES = [
 				'django.contrib.messages.context_processors.messages',
 				#'social.apps.django_app.context_processors.backends',
 				#'social.apps.django_app.context_processors.login_redirect',
-				# 'social_django.context_processors.login_redirect',			],
+				# 'social_django.context_processors.login_redirect',
+			],
 		},
 	},
 ]
