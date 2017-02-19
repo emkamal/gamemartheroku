@@ -108,6 +108,7 @@ SOCIAL_AUTH_TWITTER_SECRET = 'BMPvxkZEAj9OWcorPgpEu4sIAoy6XW5cXjL7kWizv1dypQBTX7
 SOCIAL_AUTH_FACEBOOK_KEY = '1780843878880223'  # App ID
 SOCIAL_AUTH_FACEBOOK_SECRET = '192eb87fedfd2441a75a2dedc8de5a26'
 
+
 SOCIAL_AUTH_PIPELINE = (
 	'social.pipeline.social_auth.social_details',
 	'social.pipeline.social_auth.social_uid',
@@ -122,6 +123,7 @@ SOCIAL_AUTH_PIPELINE = (
 	'social.pipeline.social_auth.load_extra_data',
 	'social.pipeline.user.user_details',
 )
+
 
 
 # Database
@@ -162,9 +164,13 @@ AUTH_PASSWORD_VALIDATORS = [
 # https://docs.djangoproject.com/en/1.10/topics/i18n/
 
 LANGUAGE_CODE = 'en-us'
+
 TIME_ZONE = 'UTC'
+
 USE_I18N = True
+
 USE_L10N = True
+
 USE_TZ = True
 
 
