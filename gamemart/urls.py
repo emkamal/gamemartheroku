@@ -21,7 +21,7 @@ urlpatterns = [
 
     # Registration related urls
     url(r'^register/$', views.register, name='register'),
-    url(r'^oauth/', include('social_django.urls', namespace='social')), # TODO: fix issue on production server
+    # url(r'^oauth/', include('social_django.urls', namespace='social')), # TODO: fix issue on production server
 
     # User dashboard related urls
     url(r'^accounts/profile/$', views.home),
