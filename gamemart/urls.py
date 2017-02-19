@@ -31,7 +31,7 @@ urlpatterns = [
     url(r'^registrationAdmin/$', views.registrationAdmin),
     url(r'^register/$', views.register),
     #url(r'^oauth/', include('social.apps.django_app.urls', namespace='social')),
-    #url(r'^oauth/', include('social_django.urls', namespace='social')), #edited 19.2.2017
+    url(r'^oauth/', include('social_django.urls', namespace='social')), #edited 19.2.2017
     url(r'^oauth/', views.home, name='social'),
     url(r'^games/$', views.browse, name='browse'),
     url(r'^games/(?P<type>[-\w]+)/$', views.explore, name='explore'),
