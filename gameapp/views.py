@@ -535,6 +535,8 @@ def get_checksum(amount):
 
 def game_by_slug(request, slug):
     game = get_object_or_404(Game, slug=slug)
+    g = Gameplay(score=0, state='openpage', game_id=game.id, player_id=request.user.id)
+    g.save()
 
     game_bought = False
 
