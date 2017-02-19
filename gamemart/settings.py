@@ -174,7 +174,7 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 
 # Some direct URL access for faster workaround of Django's slow URL reverse()
-BASE_URL = 'http://gamemart.herokuapp.com''
+BASE_URL = 'http://gamemart.herokuapp.com'
 LOGIN_URL = 'login'
 LOGOUT_URL = 'logout'
 LOGIN_REDIRECT_URL = 'home_page'
