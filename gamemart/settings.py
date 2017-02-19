@@ -214,3 +214,5 @@ if "DYNO" in os.environ:
 
 	DEBUG = False # False, once service is succesfully deployed
 	ALLOWED_HOSTS = ['*']
+
+	STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
