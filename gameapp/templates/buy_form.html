@@ -1,6 +1,6 @@
 {% if not userIsLoggedIn %}
 <a href="{% url 'login' %}" class="btn btn-primary">Buy</a>
-{% elif not game_bought  %}
+{% elif not game_bought and game.price != 0   %}
 <form action="http://payments.webcourse.niksula.hut.fi/pay/" method="POST">
   <input type="hidden" name="pid" value="{{next_purchase_id}}" />
   <input type="hidden" name="sid" value="GameMartInc" />

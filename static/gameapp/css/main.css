@@ -1,143 +1,153 @@
+body{
+  margin-top: 100px;
+}
+.user_dashboard td{
+  padding: 10px;
+  text-align: left;
+}
+
+td#bolded{
+  font-weight: bold;
+}
+
 .jumbotron{
-  margin-top: -68px;
+  background: url('../img/geometry.png') repeat;
+  margin-top: -50px;
 }
 #gameframe{
   height: 600px;
 }
-
-
-
-/*
-Fade content bs-carousel with hero headers
-Code snippet by maridlcrmn (Follow me on Twitter @maridlcrmn) for Bootsnipp.com
-Image credits: unsplash.com
-*/
-
-/********************************/
-/*       Fade Bs-carousel       */
-/********************************/
-.fade-carousel {
+.item img {
+    width: 100%;
+    background: #f7f7f7;
+    text-align: center;
+    min-height: 100px;
+    vertical-align: middle;
+}
+.item.list-group-item img {
+    width: auto;
+    min-height: 150px;
+    min-width: 150px;
+}
+.lead{
+  margin-bottom: 0;
+}
+.pricetag h3 {
+    margin: 0;
+    background: #ccc;
+    width: auto;
+    display: inline-block;
+    padding: 6px 20px;
     position: relative;
-    height: 100vh;
+    border-radius: 0 5px 5px 0;
 }
-.fade-carousel .carousel-inner .item {
-    height: 100vh;
+.pricetag h3:before {
+    content: "";
+    display: block;
+    width: 0;
+    height: 0;
+    position: absolute;
+    background: transparent;
+    border-right: 20px solid #ccc;
+    border-top: 20px solid transparent;
+    border-bottom: 19px solid transparent;
+    left: -20px;
+    top: 0px;
 }
-.fade-carousel .carousel-indicators > li {
-    margin: 0 2px;
-    background-color: #f39c12;
-    border-color: #f39c12;
-    opacity: .7;
-}
-.fade-carousel .carousel-indicators > li.active {
-  width: 10px;
-  height: 10px;
-  opacity: 1;
-}
-
-/********************************/
-/*          Hero Headers        */
-/********************************/
-.hero {
+.pricetag h3:after {
+    content: "";
+    display: block;
+    background: #fff;
+    width: 5px;
+    height: 5px;
     position: absolute;
     top: 50%;
-    left: 50%;
-    z-index: 3;
-    color: #fff;
-    text-align: center;
-    text-transform: uppercase;
-    text-shadow: 1px 1px 0 rgba(0,0,0,.75);
-      -webkit-transform: translate3d(-50%,-50%,0);
-         -moz-transform: translate3d(-50%,-50%,0);
-          -ms-transform: translate3d(-50%,-50%,0);
-           -o-transform: translate3d(-50%,-50%,0);
-              transform: translate3d(-50%,-50%,0);
-}
-.hero h1 {
-    font-size: 6em;
-    font-weight: bold;
-    margin: 0;
-    padding: 0;
+    border-radius: 10px;
+    left: -10px;
+    margin-top: -1.5px;
 }
 
-.fade-carousel .carousel-inner .item .hero {
-    opacity: 0;
-    -webkit-transition: 2s all ease-in-out .1s;
-       -moz-transition: 2s all ease-in-out .1s;
-        -ms-transition: 2s all ease-in-out .1s;
-         -o-transition: 2s all ease-in-out .1s;
-            transition: 2s all ease-in-out .1s;
-}
-.fade-carousel .carousel-inner .item.active .hero {
-    opacity: 1;
-    -webkit-transition: 2s all ease-in-out .1s;
-       -moz-transition: 2s all ease-in-out .1s;
-        -ms-transition: 2s all ease-in-out .1s;
-         -o-transition: 2s all ease-in-out .1s;
-            transition: 2s all ease-in-out .1s;
+.game-banner{
+  max-width: 100%;
+  margin: 0 0 10px;
 }
 
-/********************************/
-/*            Overlay           */
-/********************************/
-.overlay {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    z-index: 2;
-    background-color: #080d15;
-    opacity: .7;
+.navbar-header {
+    z-index: 99;
+    position: relative;
 }
+.navbar-collapse {
+		position: relative;
+		padding-top: 30px !important;
+		max-height: 270px;
+	}
+.navbar-collapse form[role="search"] {
+		position: absolute;
+		top: 0px;
+		right: 0px;
+		width: 100%;
+		padding: 0px;
+		margin: 0px;
+		z-index: 0;
+	}
+	.navbar-collapse form[role="search"] button,
+	.navbar-collapse form[role="search"] input {
+		padding: 8px 12px;
+		border-radius: 0px;
+		border-width: 0px;
+		color: rgb(119, 119, 119);
+		background-color: transparent;
+		border-color: rgb(231, 231, 231);
+		box-shadow: none;
+		outline: none;
+	}
+  .navbar-collapse form[role="search"].active button, .navbar-collapse form[role="search"].active input{
+    background-color: #252525;
+  }
+	.navbar-collapse form[role="search"] input {
+		padding: 18px 12px;
+		font-size: 14pt;
+		font-style: italic;
+		color: rgb(160, 160, 160);
+		box-shadow: none;
+	}
 
-/********************************/
-/*          Custom Buttons      */
-/********************************/
-.btn.btn-lg {padding: 10px 40px;}
-.btn.btn-hero,
-.btn.btn-hero:hover,
-.btn.btn-hero:focus {
-    color: #f5f5f5;
-    background-color: #1abc9c;
-    border-color: #1abc9c;
-    outline: none;
-    margin: 20px auto;
-}
-
-/********************************/
-/*       Slides backgrounds     */
-/********************************/
-.fade-carousel .slides .slide-1,
-.fade-carousel .slides .slide-2,
-.fade-carousel .slides .slide-3 {
-  height: 100vh;
-  background-size: cover;
-  background-position: center center;
-  background-repeat: no-repeat;
-}
-.fade-carousel .slides .slide-1 {
-  background-image: url(https://ununsplash.imgix.net/photo-1416339134316-0e91dc9ded92?q=75&fm=jpg&s=883a422e10fc4149893984019f63c818);
-}
-.fade-carousel .slides .slide-2 {
-  background-image: url(https://ununsplash.imgix.net/photo-1416339684178-3a239570f315?q=75&fm=jpg&s=c39d9a3bf66d6566b9608a9f1f3765af);
-}
-.fade-carousel .slides .slide-3 {
-  background-image: url(https://ununsplash.imgix.net/photo-1416339276121-ba1dfa199912?q=75&fm=jpg&s=9bf9f2ef5be5cb5eee5255e7765cb327);
-}
-
-/********************************/
-/*          Media Queries       */
-/********************************/
-@media screen and (min-width: 980px){
-    .hero { width: 980px; }
-}
-@media screen and (max-width: 640px){
-    .hero h1 { font-size: 4em; }
-}
-
-
-
-
-
+	@media (min-width: 768px) {
+		.navbar-collapse {
+			padding-top: 0px !important;
+			padding-right: 38px !important;
+		}
+		.navbar-collapse form[role="search"] {
+			width: 38px;
+      right: -10px;
+		}
+		.navbar-collapse form[role="search"] button,
+		.navbar-collapse form[role="search"] input {
+			padding: 15px 12px;
+		}
+		.navbar-collapse form[role="search"] input {
+			padding: 25px 12px;
+			font-size: 18pt;
+			opacity: 0;
+			display: none;
+		}
+		.navbar-collapse form[role="search"].active {
+			width: 400px;
+      right: -76px;
+		}
+		.navbar-collapse form[role="search"].active button,
+		.navbar-collapse form[role="search"].active input {
+			display: table-cell;
+			opacity: 1;
+		}
+    	.navbar-collapse form[role="search"].active input {
+			width: 100%;
+            text-align: right;
+		}
+        .navbar-collapse form[role="search"].active button[type="submit"] {
+            background-color: transparent;
+	    }
+	}
 
 @import url(http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css);
 .col-item
@@ -259,7 +269,6 @@ Image credits: unsplash.com
 .footer {
 	background: #EDEFF1;
 	height: auto;
-	padding-bottom: 30px;
 	position: relative;
 	width: 100%;
 	border-bottom: 1px solid #CCCCCC;
@@ -429,15 +438,15 @@ Image credits: unsplash.com
     color: #fff;
     background-color:#59b5fa;
 }
-@media(max-width:768px){
-    #login-dp{
-        background-color: inherit;
-        color: #fff;
-    }
-    #login-dp .bottom{
-        background-color: inherit;
-        border-top:0 none;
-    }
+@media(max-width:767px){
+  #login-dp{
+      background-color: inherit;
+      color: #fff;
+  }
+  #login-dp .bottom{
+      background-color: inherit;
+      border-top:0 none;
+  }
 }
 
 
@@ -455,27 +464,35 @@ Image credits: unsplash.com
 .mega-dropdown {
   position: static !important;
 }
-.mega-dropdown-menu {
-    padding: 20px 0px;
-    width: 100%;
-    box-shadow: none;
-    -webkit-box-shadow: none;
+.navbar-nav .dropdown-menu.mega-dropdown-menu {
+  background: #eee;
+  max-width: 768px;
+  left: auto;
 }
-.mega-dropdown-menu > li > ul {
+
+.mega-dropdown-menu  ul {
   padding: 0;
   margin: 0;
 }
-.mega-dropdown-menu > li > ul > li {
+.mega-dropdown-menu  ul  li {
   list-style: none;
+  display: inline-block;
 }
-.mega-dropdown-menu > li > ul > li > a {
+.mega-dropdown-menu  ul  li  a {
   display: block;
-  color: #222;
-  padding: 3px 5px;
+  padding: 10px 9px;
+  background: #ddd;
+  margin: 0 10px 15px 0;
 }
 .mega-dropdown-menu > li ul > li > a:hover,
 .mega-dropdown-menu > li ul > li > a:focus {
   text-decoration: none;
+}
+@media screen and (min-width: 769px) {
+  .mega-dropdown-menu  ul  li  a {
+    padding: 4px 8px;
+    margin: 0 5px 9px 0;
+  }
 }
 .mega-dropdown-menu .dropdown-header {
   font-size: 18px;
@@ -483,27 +500,11 @@ Image credits: unsplash.com
   padding: 5px 60px 5px 5px;
   line-height: 30px;
 }
-
-.carousel-control {
-  width: 30px;
-  height: 30px;
-  top: -35px;
-
+.mega-dropdown-menu h5{
+  color: #fff;
+  background: #337ab7;
+  padding: 15px;
 }
-.left.carousel-control {
-  right: 30px;
-  left: inherit;
-}
-.carousel-control .glyphicon-chevron-left,
-.carousel-control .glyphicon-chevron-right {
-  font-size: 12px;
-  background-color: #fff;
-  line-height: 30px;
-  text-shadow: none;
-  color: #333;
-  border: 1px solid #ddd;
-}
-
 
 
 
@@ -564,4 +565,112 @@ Image credits: unsplash.com
 .list-group-item-text
 {
     margin: 0 0 11px;
+}
+
+
+
+
+@media (min-width: 768px) {
+    .omb_row-sm-offset-3 div:first-child[class*="col-"] {
+        margin-left: 25%;
+    }
+}
+
+.omb_login .omb_authTitle {
+    text-align: center;
+	line-height: 300%;
+}
+
+.omb_login .omb_socialButtons a {
+	color: white; // In yourUse @body-bg
+	opacity:0.9;
+}
+.omb_login .omb_socialButtons a:hover {
+    color: white;
+	opacity:1;
+}
+.omb_login .omb_socialButtons .omb_btn-facebook {background: #3b5998;}
+.omb_login .omb_socialButtons .omb_btn-twitter {background: #00aced;}
+.omb_login .omb_socialButtons .omb_btn-github {background: #444444;}
+
+
+.omb_login .omb_loginOr {
+	position: relative;
+	font-size: 1.5em;
+	color: #aaa;
+	margin-top: 1em;
+	margin-bottom: 1em;
+	padding-top: 0.5em;
+	padding-bottom: 0.5em;
+}
+.omb_login .omb_loginOr .omb_hrOr {
+	background-color: #cdcdcd;
+	height: 1px;
+	margin-top: 0px !important;
+	margin-bottom: 0px !important;
+}
+.omb_login .omb_loginOr .omb_spanOr {
+	display: block;
+	position: absolute;
+	left: 50%;
+	top: -0.6em;
+	margin-left: -1.5em;
+	background-color: white;
+	width: 3em;
+	text-align: center;
+}
+
+.omb_login .omb_loginForm .input-group.i {
+	width: 2em;
+}
+.omb_login .omb_loginForm  .help-block {
+    color: red;
+}
+
+
+@media (min-width: 768px) {
+    .omb_login .omb_forgotPwd {
+        text-align: right;
+		margin-top:10px;
+ 	}
+}
+
+
+
+/* messages */
+ul.messages {
+  margin:10px 100px;
+  padding:0;
+  list-style-type:
+  none;
+}
+ul.messages li.success,
+ul.messages li.warning,
+ul.messages li.error,
+ul.messages li.info {
+  margin:0;
+  padding:14px 20px;
+  list-style:none;
+  color:#fff;
+}
+ul.messages li.success { background:#81ce81; }
+ul.messages li.success a { color:#0ac33e; }
+ul.messages li.error { background:#a30029; color:#e9828e; }
+ul.messages li.error a { color:#e9828e; }
+ul.messages li.info { background:#faffae; color:#696b4e; }
+ul.messages li.info a { color:#1586de; }
+ul.messages li.warning { background:#de9404; }
+ul.messages li.warning a { color:#f49000; }
+ul.messages li a.close {
+  margin:0;
+  float:right;
+  opacity:1;
+  border:0;
+  box-shadow:none;
+  text-shadow:none;
+}
+.alert-error {
+    color: #a94442;
+    background-color: #f2dede;
+    border-color: #ebccd1;
 }

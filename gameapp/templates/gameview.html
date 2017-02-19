@@ -9,22 +9,27 @@
 {% endblock %}
 {% block content %}
 
+<!--game view for purchased games-->
 <div class="container">
-  {% if game_bought %}
+  {% if game_bought or game.price == 0  %}
     <div class="row">
       <div class="col-md-12">
         <iframe id="gameframe" width="100%" height="100%" src="{{ game.url }}" data-gameid="{{game.id}}"></iframe>
       </div>
     </div>
   {% endif %}
+
   <div class="row">
     <div class="col-md-10">
-      <h1>{{ game.title }}</h1>
+      <h1>{{ game.title }}</h1> <!--displays game title-->
     </div>
     <div class="col-md-2">
 
     </div>
   </div>
+
+
+  <!-- Game image/ title-->
   <div class="row">
     <div class="col-md-8">
       {% if game_banner_url != 'none' %}
@@ -36,12 +41,15 @@
         <p>{{ game.instruction }}</p>
       {% endif %}
     </div>
+
     <div class="col-md-4 ">
       <div class="row">
-        <div class="col-md-6 pricetag"><h3>€ {{ game.price }}</h3></div>
-        <div class="col-md-6 text-right">{% include "buy_form.html" %}</div>
+        <div class="col-md-6 pricetag"><h3>€ {{ game.price }}</h3></div> <!--displays game price-->
+        <div class="col-md-6 text-right">{% include "buy_form.html" %}</div> <!--links to buy page-->
       </div>
+
       <hr />
+
       <div class="list-group">
         <a href="#" class="list-group-item visitor">
             <h3 class="pull-right">
@@ -62,6 +70,8 @@
                 Subscribers</p>
         </a>
       </div>
+
+      <!-- Displaying high scores-->
       {% if highscore|length > 0 %}
         <hr/>
         <h4>Highscore</h4>

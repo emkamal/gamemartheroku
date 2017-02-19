@@ -2,6 +2,8 @@
 {% block title %}Browse games{% endblock %}
 {% block content %}
 {% load static %}
+
+
 <div class="container">
   {% if games %}
     <div id="products" class="row">
@@ -11,11 +13,11 @@
             <img class="group list-group-image" src="{{ game.banner_url }}" alt="no image" />
             <div class="caption">
               <h4 class="group inner list-group-item-heading"><a href="{{BASE_URL}}/game/{{ game.slug }}">{{ game.title }}</a></h4>
-              {# <p class="group inner list-group-item-text">{{game.desc|truncatechars:100}}</p>#}
-              {% if not game.bought %}
+              {# <p class="group inner list-group-item-text">{{game.desc|truncatechars:100}}</p>#} <!-- game description minimized-->
+              {% if not game.bought and game.price != 0 %}
                 <div class="row">
                   <div class="col-xs-12 col-sm-6">
-                    <p class="lead">€ {{ game.price }}</p>
+                    <p class="lead">€ {{ game.price }}</p> <!--retrieving game price-->
                   </div>
                   <div class="col-xs-12 col-sm-6 text-right">
                     {% include "buy_form.html" with next_purchase_id=next_purchase_id checksum=game.checksum %}
@@ -36,7 +38,7 @@
     </div>
     {% include "games_pagination.html" %}
   {% else %}
-    <div class="well well-lg">Too bad we have no {{page_title}} yet </div>
+    <div class="well well-lg">Too bad we have no {{page_title}} yet </div> <!--game page dispay-->
   {% endif %}
 </div>
 

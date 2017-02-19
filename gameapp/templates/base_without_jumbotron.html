@@ -35,7 +35,20 @@
       return t;
     }(document, "script", "twitter-wjs"));</script>
 
-    {% include "nav.html" %}
+    {% include "nav.html" %} <!--nav bar included -->
+
+    <!--Success and Error message-->
+    {% if messages %}
+    <div class="container">
+      {% for message in messages %}
+      <div class="alert alert-{{ message.tags }} alert-dismissible" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        {{ message|safe }}
+      </div>
+      {% endfor %}
+    </div>
+    {% endif %}
+
 
     {% block content %}
     <div class="starter-template">

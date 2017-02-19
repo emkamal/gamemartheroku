@@ -46,9 +46,9 @@ $(document).ready(function(){
               <img src="{% static '/admin/img/icon-no.svg' %}" alt="no" />
             {% endif %}
           </td>
-          <td>{{ game.added_date }}</td>
-          <td>{{ game.purchase_count }}</td>
-          <td>{{ game.play_count }}</td>
+          <td>{{ game.added_date }}</td> <!--date the game was added-->
+          <td>{{ game.purchase_count }}</td> <!--number of purchase-->
+          <td>{{ game.play_count }}</td> <!--number of times game has been played-->
           <td><a href="{% url 'edit_game' game.id %}">Edit</a></td>
           <td><a href="{% url 'del_game' game.id %}">Delete</a></td>
         </tr>
@@ -69,12 +69,15 @@ $(document).ready(function(){
         </tr>
         {% for sale in sales %}
         <tr>
-          <td><a href="{% url 'game' sale.game_slug %}">{{ sale.game_title }}</a></td>
-          <td>{{ sale.buyer_name }}</td>
-          <td>{{ sale.bought_date }}</td>
+          <td><a href="{% url 'game' sale.game_slug %}">{{ sale.game_title }}</a></td> <!--display game title-->
+          <td>{{ sale.buyer_name }}</td> <!--buyer's name-->
+          <td>{{ sale.bought_date }}</td>   <!--date of purchase-->
           <td class="text-right">€ {{ sale.amount }}</td>
         </tr>
         {% endfor %}
+        
+        <!--STATS-->
+        <!--Total income generated for developer-->
         <tr>
           <th colspan="3">Total Income</th>
           <th class="text-right">€ {{ total_income }}</th>

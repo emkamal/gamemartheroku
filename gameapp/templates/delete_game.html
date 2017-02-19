@@ -2,11 +2,13 @@
 {% block title %}Submit Games{% endblock %}
 {% block content %}
 
+<!--delete game form-->
+
 <div class="container">
   <div class="row">
     <div class="col-md-6 col-sm-6 col-xs-12">
       <form id="submitgamesform" method="post" enctype="multipart/form-data">{% csrf_token %}
-          {% for field in form %}
+          {% for field in form %} 
               {% if field.errors %}
                   <div class="control-group error form-group">
                       <label class="control-label">{{ field.label }}</label>

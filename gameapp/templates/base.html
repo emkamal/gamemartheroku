@@ -8,6 +8,8 @@
     <title>{% block title %}Exercise template{% endblock %}</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
   </head>
+
+
   <body>
     <!-- Load Facebook SDK for JavaScript -->
     <div id="fb-root"></div>
@@ -35,7 +37,7 @@
       return t;
     }(document, "script", "twitter-wjs"));</script>
 
-    {% include "nav.html" %}
+    {% include "nav.html" %} <!--including navigation to all pages-->
 
     <div class="jumbotron">
       <div class='container'>
@@ -44,6 +46,18 @@
       </div>
     </div>
 
+    <!--Success and Error message-->
+    {% if messages %}
+    <div class="container">
+      {% for message in messages %}
+      <div class="alert alert-{{ message.tags }} alert-dismissible" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        {{ message|safe }}
+      </div>
+      {% endfor %}
+    </div>
+    {% endif %}
+
     {% block content %}
     <div class="starter-template">
       <h1>Bootstrap starter template</h1>
@@ -51,7 +65,7 @@
     </div>
     {% endblock %}
 
-    {% include "footer.html" %}
+    {% include "footer.html" %}  <!--including footer to all pages-->
 
 
     {% block footer_script %}{% endblock %}

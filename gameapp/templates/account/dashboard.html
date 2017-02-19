@@ -3,51 +3,53 @@
 {% block title %}Dashboard{% endblock %}
 
 {% block content %}
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-6 col-sm-6 col-xs-12">
+
     <h1>Dashboard</h1>
     <p>Welcome to your dashboard.</p>
 
-    <table class="user_dashboard">
+<!--form for Dashboard page-->
+    <table class="user_dashboard table table-bordered">
      <tr>
        <td id="bolded">Username:</td>
        <td>{{ user.username }}</td>
-       <td></td>
      </tr>
      <tr>
        <td id="bolded">Firstname:</td>
        <td>{{ user.first_name }}</td>
-       <td><a href="{% url 'editFirstName' %}">Edit</td>
      </tr>
      <tr>
        <td id="bolded">Lastname:</td>
        <td>{{ user.last_name }}</td>
-       <td><a href="{% url 'editLastName' %}">Edit</td>
      </tr>
      <tr>
        <td id="bolded">Email:</td>
        <td>{{ user.email }}</td>
-       <td><a href="{% url 'editEmail' %}">Edit</td>
      </tr>
      <tr>
        <td id="bolded">Biography:</td>
        <td>{{ user.bio }}</td>
-       <td><a href="{% url 'editBio' %}">Edit</td>
      </tr>
      <tr>
        <td id="bolded">Date joided:</td>
        <td>{{ user.date_joined }}</td>
-       <td></td>
      </tr>
      <tr>
        <td id="bolded">Last login:</td>
        <td>{{ user.last_login }}</td>
-       <td></td>
      </tr>
    </table>
 
+   <form action="{% url 'editProfile' %}" method="get">
+     <button class="btn btn-primary">Edit profile</button>
 
+   </form>
 
-
-
-
+    </div>
+  </div>
+</div>
 
 {% endblock %}

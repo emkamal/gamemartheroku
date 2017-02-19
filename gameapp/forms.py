@@ -8,22 +8,21 @@ from django.utils import timezone
 
 
 class UserForm(forms.ModelForm):
-    # use password widget so password isn't shown
+    """Handle user registration form."""
+
+    # Use password widget so password isn't shown
     password = forms.CharField(widget=forms.PasswordInput())
 
     class Meta:
-        model = User # We want to use User model ...
-        # ... and the form should have the following fields
-
-        #fields = ('first_name', 'last_name', 'username', 'password', 'email', 'slug', 'user_type')
+        model = User
         fields = ('first_name', 'last_name', 'username', 'password', 'email', 'user_type')
 
     def save(self):
         instance = super(UserForm, self).save(commit=False)
 
         instance.slug = orig = '-'.join((slugify(instance.first_name), slugify(instance.last_name)))
-        #instance.slug = orig = slugify(instance.username)
 
+        # If the slug already exist, append it with the next iterating number
         for x in itertools.count(1):
             if not User.objects.filter(slug=instance.slug).exists():
                 break
@@ -33,8 +32,6 @@ class UserForm(forms.ModelForm):
 
         return instance
 
-#class UsernameForm(forms.Form):
-#    username = forms.CharField(max_length=150)
 
 class FirstNameForm(forms.Form):
     first_name = forms.CharField(max_length=30)
@@ -48,12 +45,14 @@ class EmailForm(forms.Form):
 class BioForm(forms.Form):
     bio = forms.CharField(max_length=1000)
 
-
 class SubmitForm(forms.ModelForm):
+    """Handle game submission form."""
+
     class Meta:
-        model = Game # referencing the Game model and its fields
+        model = Game # Referencing the Game model and its fields
         fields = ['title', 'desc', 'instruction', 'url', 'price']
 
+    # Additional fields
     categories = forms.ModelMultipleChoiceField(Taxonomy.objects.filter(taxonomy_type='game_category'))
     image = forms.FileField()
 
@@ -68,6 +67,7 @@ class SubmitForm(forms.ModelForm):
         instance.added_date = timezone.now()
         instance.slug = orig = slugify(instance.title)
 
+        # If the slug already exist, append it with the next iterating number
         for x in itertools.count(1):
             if not Game.objects.filter(slug=instance.slug).exists():
                 break

@@ -1,15 +1,9 @@
 from django.contrib import admin
 from .models import *
 
-# Register your models here.
 class TaxonomyAdmin(admin.ModelAdmin):
     list_display = ('label','taxonomy_type')
 admin.site.register(Taxonomy,TaxonomyAdmin)
-
-# class Game_TaxonomyAdmin(admin.ModelAdmin):
-#     list_display = ('game','taxonomy')
-#     pass
-# admin.site.register(Game_Taxonomy,Game_TaxonomyAdmin)
 
 class ReviewAdmin(admin.ModelAdmin):
     list_display = ('person','game','rating')
@@ -30,11 +24,9 @@ class AssetAdmin(admin.ModelAdmin):
 admin.site.register(Asset,AssetAdmin)
 
 class GameplayAdmin(admin.ModelAdmin):
-    # list_display = ('title',)
     pass
 admin.site.register(Gameplay,GameplayAdmin)
 
 class PurchaseAdmin(admin.ModelAdmin):
-    # list_display = ('title',)
     pass
 admin.site.register(Purchase,PurchaseAdmin)

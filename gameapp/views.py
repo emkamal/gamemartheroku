@@ -1,30 +1,26 @@
-from django.http import HttpResponse, Http404
-from django.shortcuts import *
-from gameapp.forms import UserForm
-#from gameapp.forms import UsernameForm
-from gameapp.forms import FirstNameForm, LastNameForm, EmailForm, BioForm
-from gameapp.models import *
-from django.conf import settings
+import os, sys, io, json, operator
 from hashlib import md5
-from django.shortcuts import render
-#from django.contrib.auth import authenticate, login
-from .forms import SubmitForm
-#from .forms import LoginForm, SubmitForm
-from django.contrib.auth.decorators import login_required
-from django.utils import timezone
-from django.shortcuts import redirect
-import json
-from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-import operator
-import os
-import io
-import sys
 from PIL import Image, ImageOps
+
+from django.conf import settings
+from django.http import HttpResponse, Http404
+from django.utils import timezone
+from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib import messages
+from django.contrib.auth.decorators import login_required
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models import Count
 
+from gameapp.forms import *
+from gameapp.models import *
+
+
 def home(request):
+    """Home page of GameMart. It shows 3 featured games and 6 latest games."""
+
     featured_games = load_games(request, 'featured', '', 3)
     latest_games = load_games(request, 'latest', '', 6)
+
     r = render (
         request,
         'home.html',
@@ -40,49 +36,37 @@ def home(request):
 
     return HttpResponse(r)
 
-
 @login_required
 def dashboard(request):
-    return render(request, 'account/dashboard.html', {'section':'dashboard', 'user':request.user})
+    """User dashboard where user can edit their data."""
 
-#def editUsername(request):
-#    return render(request, 'account/editUsername.html', {'user': request.user})
+    r = render (
+        request,
+        'account/dashboard.html',
+        {
+            'page_title': 'User Dashboard',
+            'page_subtitle': '',
+            'section':'dashboard',
+            'user':request.user
+        },
+        content_type='application/xhtml+xml'
+    )
+    return HttpResponse(r)
 
-def editFirstName(request):
-    return render(request, 'account/editFirstName.html', {'user': request.user})
+def editProfile(request):
+    """Edit profile."""
 
-def editLastName(request):
-    return render(request, 'account/editLastName.html', {'user': request.user})
-
-def editEmail(request):
-    return render(request, 'account/editEmail.html', {'user': request.user})
-
-def editBio(request):
-    return render(request, 'account/editBio.html', {'user': request.user})
-
-# def changeUsername(request):
-#     username_form = UsernameForm(request.POST or None, initial={'username': 'whatever'})
-#     error = ''
-#     if request.method == 'POST':
-#         if username_form.is_valid():
-#             user = request.user
-#             user_name = request.POST.get("username")
-#             try:
-#                 usernames = User.objects.get(username=user_name)
-#             except User.DoesNotExist:
-#                 usernames = None
-#
-#             if usernames is None:
-#                 user.username = user_name
-#                 user.save()
-#                 return redirect('home_page')
-#             else:
-#                 error = 'Username already in use'
-#
-#     else:
-#         username_form = UsernameForm()
-#
-#     return render(request, 'account/editUsername.html', {'username_form': username_form, 'error': error})
+    r = render (
+        request,
+        'account/editProfile.html',
+        {
+            'page_title': 'Edit Profile',
+            'page_subtitle': '',
+            'user': request.user
+        },
+        content_type='application/xhtml+xml'
+    )
+    return HttpResponse(r)
 
 def changeFirstName(request):
     first_name_form = FirstNameForm(request.POST or None, initial={'first_name': 'whatever'})
@@ -92,11 +76,21 @@ def changeFirstName(request):
             firstName = request.POST.get("first_name")
             user.first_name = firstName
             user.save()
-            return redirect('home_page')
+            return redirect('user_dashboard')
     else:
         first_name_form = FirstNameForm()
 
-    return render(request, 'account/editFirstName.html', {'first_name_form': first_name_form})
+    r = render (
+        request,
+        'account/editProfile.html',
+        {
+            'page_title': 'Change First Name',
+            'page_subtitle': '',
+            'first_name_form': first_name_form
+        },
+        content_type='application/xhtml+xml'
+    )
+    return HttpResponse(r)
 
 def changeLastName(request):
     last_name_form = LastNameForm(request.POST or None, initial={'last_name': 'whatever'})
@@ -106,11 +100,21 @@ def changeLastName(request):
             lastName = request.POST.get("last_name")
             user.last_name = lastName
             user.save()
-            return redirect('home_page')
+            return redirect('user_dashboard')
     else:
         last_name_form = LastNameForm()
 
-    return render(request, 'account/editLastName.html', {'last_name_form': last_name_form})
+    r = render (
+        request,
+        'account/editProfile.html',
+        {
+            'page_title': 'Change Last Name',
+            'page_subtitle': '',
+            'last_name_form': last_name_form
+        },
+        content_type='application/xhtml+xml'
+    )
+    return HttpResponse(r)
 
 def changeEmail(request):
     email_form = EmailForm(request.POST or None, initial={'email': 'whatever'})
@@ -127,15 +131,25 @@ def changeEmail(request):
             if emails is None:
                 user.email = email
                 user.save()
-                return redirect('home_page')
+                return redirect('user_dashboard')
             else:
                 error = 'Email already in use'
 
     else:
         email_form = EmailForm()
 
-    return render(request, 'account/editEmail.html', {'email_form': email_form, 'error': error})
-
+    r = render (
+        request,
+        'account/editProfile.html',
+        {
+            'page_title': 'Change Email',
+            'page_subtitle': '',
+            'email_form': email_form,
+            'error': error
+        },
+        content_type='application/xhtml+xml'
+    )
+    return HttpResponse(r)
 
 def changeBio(request):
     bio_form = BioForm(request.POST or None, initial={'bio': 'whatever'})
@@ -145,20 +159,21 @@ def changeBio(request):
             bio = request.POST.get("bio")
             user.bio = bio
             user.save()
-            return redirect('home_page')
+            return redirect('user_dashboard')
     else:
         bio_form = BioForm()
 
-    return render(request, 'account/editBio.html', {'bio_form': bio_form})
-
-def registration(request):
-    return render(request, 'register.html', {'page_title': 'Registration'})
-
-def registrationDeveloper(request):
-    return render(request, 'registerDeveloper.html', {'page_title': 'Developer Registration'})
-
-def registrationAdmin(request):
-    return render(request, 'registerAdmin.html', {})
+    r = render (
+        request,
+        'account/editProfile.html',
+        {
+            'page_title': 'Change Bio',
+            'page_subtitle': '',
+            'bio_form': bio_form
+        },
+        content_type='application/xhtml+xml'
+    )
+    return HttpResponse(r)
 
 def register(request):
     if request.method == 'POST':
@@ -166,16 +181,31 @@ def register(request):
         if user_form.is_valid():
             user = user_form.save()
             user.set_password(user.password)
-            #user.user_type = 'player'
             user.save()
-            #return render(request, 'debug.html', {'user': user})    #this is for testing
+            messages.success(request, "Registration Successful!!!")
             return redirect('login')
+
+        else:
+            messages.error(request, "Registration Unsuccessful!!!")
     else:
         user_form = UserForm()
-    return render(request, 'register.html', {'form': user_form, 'page_title': 'Registration' })
+
+    r = render (
+        request,
+        'register.html',
+        {
+            'page_title': 'Register',
+            'page_subtitle': '',
+            'form': user_form
+        },
+        content_type='application/xhtml+xml'
+    )
+    return HttpResponse(r)
 
 def browse(request):
-    games = load_games(request, 'featured')
+    """Browse page."""
+
+    games = load_games(request, 'all')
 
     r = render (
         request,
@@ -188,10 +218,11 @@ def browse(request):
         },
         content_type='application/xhtml+xml'
     )
-
     return HttpResponse(r)
 
 def explore(request, type):
+    """Explore games."""
+
     if type == 'featured':
         page_title = 'Featured'
         games = load_games(request, 'featured')
@@ -220,32 +251,15 @@ def explore(request, type):
         },
         content_type='application/xhtml+xml'
     )
-
     return HttpResponse(r)
 
-def games_paginator(request, games, num_per_page):
-    paginator = Paginator(games, num_per_page)
-
-    page = request.GET.get('page')
-
-    try:
-        paginated_games = paginator.page(page)
-    except PageNotAnInteger:
-        # If page is not an integer, deliver first page.
-        paginated_games = paginator.page(1)
-    except EmptyPage:
-        # If page is out of range (e.g. 9999), deliver last page of results.
-        paginated_games = paginator.page(paginator.num_pages)
-
-    return paginated_games
-
 def explore_by_taxonomy(request, tag):
-    # taxonomy_type = request.path.split('/')[2]
+    """Browse games based on tag id."""
+
     target = Taxonomy.objects.get(slug=tag)
     page_title = target.label
     tag_id = target.id
 
-    # games_exist = True
     games = load_games(request, 'tag', tag_id)
     r = render (
         request,
@@ -260,81 +274,11 @@ def explore_by_taxonomy(request, tag):
 
     return HttpResponse(r)
 
-
-def load_games(request, mode="all", tags="", num=3):
-    # all, featured, latest, tags,
-
-    user_owner_games = [];
-
-    if(request.user.is_authenticated()):
-        user_purchases = Purchase.objects.filter(buyer_id=request.user.id)
-        if user_purchases.exists():
-            for user_purchase in user_purchases:
-                user_owner_games.append(user_purchase.game_id)
-
-    try:
-        games = []
-        if mode == "all":
-            games_querysets = Game.objects.order_by('-added_date')
-        elif mode == "featured":
-            games_querysets = Game.objects.filter(is_featured=True)[:num]
-        elif mode == "latest":
-            games_querysets = Game.objects.all().order_by('-added_date')[:num]
-        elif mode == "top-grossing":
-            games_querysets = Game.objects.all().annotate(num_purchase=Count('purchase')).order_by('-num_purchase')
-        elif mode == "most-played":
-            games_querysets = Game.objects.all().annotate(num_gameplay=Count('gameplay')).order_by('-num_gameplay')
-        elif mode == "tag":
-            games_querysets = Game.objects.filter(taxonomies=tags)
-
-        games = build_games_view(request, games_querysets)
-
-        return games
-
-    except Game.DoesNotExist:
-        raise Http404("Game does not exist")
-
-def build_games_view(request, querysets):
-
-    user_owned_games = [];
-
-    if(request.user.is_authenticated()):
-        user_purchases = Purchase.objects.filter(buyer_id=request.user.id)
-        if user_purchases.exists():
-            for user_purchase in user_purchases:
-                user_owned_games.append(user_purchase.game_id)
-
-    output = []
-
-    for game in querysets:
-        game_banner_url = 'http://192.168.5.5/media/site/no-image-400x250.jpg';
-        for asset in game.asset_set.all():
-            if asset.asset_type == 'game-banner-400x250':
-                game_banner_url = asset.url
-                break
-
-        if game.id in user_owned_games:
-            game_bought = True
-        else:
-            game_bought = False
-
-        checksum = get_checksum(game.price)
-
-        output.append({
-            'id': game.id,
-            'title': game.title,
-            'price': game.price,
-            'desc': game.desc,
-            'slug': game.slug,
-            'banner_url': game_banner_url,
-            'bought': game_bought,
-            'checksum': checksum
-        })
-
-    return output
-
 def submit(request):
+    """Submit games."""
+
     if not request.user.is_authenticated:
+        messages.add_message(request, messages.WARNING, "Sorry, please login to submit a game")
         return redirect((settings.LOGIN_URL))
     if request.method == "POST":
         form = SubmitForm(request.POST, request.FILES)
@@ -349,63 +293,29 @@ def submit(request):
 
             handle_uploaded_file(request, request.FILES['image'], game)
 
+            messages.add_message(request, messages.INFO, "Your game has been submitted")
             return redirect('developer')
+
+        else:
+            messages.error(request, "Game submit failed!!!")
     else:
         form = SubmitForm()
-    return render(request, 'submit.html', {'form': form, 'page_title': 'Submit Games'})
 
-def handle_uploaded_file(request, file, game):
-    # with open('/media/image.jpg', 'wb+') as destination:
-    #     for chunk in file.chunks():
-    #         destination.write(chunk)
-
-    # folder = request.path.replace("/", "_")
-    # folder = 'media/games/'
-    folder = 'media/games/' + game.slug
-    original_filename, original_fileext = os.path.splitext(request.FILES['image'].name)
-    uploaded_filename = game.slug+"-banner-original-size"+original_fileext
-
-    # create the folder if it doesn't exist.
-    try:
-        os.mkdir(os.path.join(settings.BASE_DIR, folder))
-    except:
-        pass
-
-    # save the uploaded file inside that folder.
-    full_filename = os.path.join(settings.BASE_DIR, folder, uploaded_filename)
-    fout = io.open(full_filename, 'wb+')
-    # Iterate through the chunks.
-    for chunk in file.chunks():
-        fout.write(chunk)
-    fout.close()
-
-    generate_thumbnails(full_filename, game)
-
-def generate_thumbnails(filename, game):
-    sizes = {
-        '128x128': (128, 128),
-        '400x250': (400, 250),
-        '750x400': (750, 400)
-    }
-
-    for key, size in sizes.items():
-        outfile = filename.replace('original-size', key)
-
-        try:
-            im = Image.open(filename)
-            # im.thumbnail(size)
-            # im.save(outfile, "JPEG")
-            thumb = ImageOps.fit(im, size, Image.ANTIALIAS)
-            thumb.save(outfile, "JPEG")
-
-            asset = Asset(asset_type='game-banner-'+key,url=outfile.replace(settings.BASE_DIR, ''),game_id=game.id)
-            asset.save()
-
-        except IOError:
-            print("cannot create thumbnail for")
+    r = render (
+        request,
+        'submit.html',
+        {
+            'page_title': 'Submit Games',
+            'form': form
+        },
+        content_type='application/xhtml+xml'
+    )
+    return HttpResponse(r)
 
 def developer(request):
+    """Developer dashboard."""
     if not request.user.is_authenticated:
+        messages.add_message(request, messages.WARNING, "Sorry, please login to access the dashboard")
         return redirect((settings.LOGIN_URL))
 
     games = Game.objects.filter(owner_id=request.user.id)
@@ -450,27 +360,33 @@ def developer(request):
 
             total_income += purchase.amount
 
-    return render(
+    r = render (
         request,
         'developer.html',
         {
+            'page_title': 'Developer Dashboard',
             'games': games_output,
             'sales': sales_output,
             'total_income': total_income,
             'total_play': total_play,
             'total_game': total_game,
             'total_buyer': len(buyers),
-            'page_title': 'Developer Dashboard'
-        }
+        },
+        content_type='application/xhtml+xml'
     )
 
+    return HttpResponse(r)
+
 def edit_game(request, game_id):
+    """Edit game."""
     game = Game.objects.get(id=game_id)
 
     if not request.user.is_authenticated():
+        messages.add_message(request, messages.WARNING, "Sorry, please login to update a game")
         return redirect((settings.LOGIN_URL))
 
     if game.owner_id != request.user.id:
+        messages.add_message(request, messages.WARNING, "Sorry, you can't edit this game")
         return redirect('developer')
 
     if request.method == "POST":
@@ -485,7 +401,7 @@ def edit_game(request, game_id):
                 game.taxonomies.add(category.id)
 
             handle_uploaded_file(request, request.FILES['image'], game)
-
+            messages.add_message(request, messages.INFO, "Your game has been updated")
             return redirect('developer')
     else:
 
@@ -499,44 +415,42 @@ def edit_game(request, game_id):
         }
         form = SubmitForm(initial=data)
 
-    return render(
+    r = render (
         request,
         'edit_game.html',
         {
+            'page_title': 'Edit game',
             'form': form,
-            'page_title': 'Edit game'
-        }
+        },
+        content_type='application/xhtml+xml'
     )
 
-def del_game(request, game_id):
+    return HttpResponse(r)
 
+def del_game(request, game_id):
+    """Delete game."""
     if request.user.is_authenticated():
         game = Game.objects.get(id=game_id)
         if game.owner_id == request.user.id:
             game.delete()
+            messages.add_message(request, messages.INFO, "Your game has been deleted")
             return redirect('developer')
         else:
+            messages.add_message(request, messages.WARNING, "Sorry, you can't delete that game")
             redirect('developer')
     else:
+        messages.add_message(request, messages.WARNING, "Sorry, please login to delete a game")
         redirect('login')
 
     return redirect('login')
 
-
-def next_purchase_id():
-    purchase = Purchase.objects.latest('id')
-    next_purchase_id = int(purchase.id)+1;
-    return next_purchase_id
-
-def get_checksum(amount):
-    checksumstr = "pid={}&sid={}&amount={}&token={}".format(next_purchase_id(), settings.SELLER_ID, amount, settings.PAYMENT_SECRET_KEY)
-    checksum = md5(checksumstr.encode("ascii")).hexdigest()
-    return checksum
-
 def game_by_slug(request, slug):
+    """Show game page based on its slug."""
     game = get_object_or_404(Game, slug=slug)
-    g = Gameplay(score=0, state='openpage', game_id=game.id, player_id=request.user.id)
-    g.save()
+
+    if request.user.is_authenticated():
+        g = Gameplay(score=0, state='openpage', game_id=game.id, player_id=request.user.id)
+        g.save()
 
     game_bought = False
 
@@ -579,30 +493,68 @@ def game_by_slug(request, slug):
             game_banner_url = asset.url
             break
 
-    return render(
+    r = render (
         request,
         'gameview.html',
         {
+            'page_title': game.title,
             'game': game,
             'game_banner_url': game_banner_url,
             'next_purchase_id': next_purchase_id(),
-            'page_title': game.title,
             'checksum': checksum,
             'game_bought': game_bought,
             'highscore': highscore_sorted,
             'play_count': play_count,
             'purchase_count': purchases.count()
-        }
+        },
+        content_type='application/xhtml+xml'
     )
 
+    return HttpResponse(r)
+
 def payment(request, status, slug):
+    """Payment callback page.
+
+    Keyword arguments:
+    request -- the standard django request object
+    status -- status of the payment, it could either be success, cancelled or error
+    slug -- slug of the game which was being purchased
+    """
+
+    if not request.user.is_authenticated():
+        messages.add_message(request, messages.INFO, "Your Message")
+        return redirect('login')
+
     game = get_object_or_404(Game, slug=slug)
-    purchase = Purchase(amount=game.price, buyer_id=request.user.id, game_id=game.id, status=status)
+    try:
+        purchase = Purchase(amount=game.price, buyer_id=request.user.id, game_id=game.id, status=status)
+    except Purchase.DoesNotExist:
+        raise Http404("There is no purchase data yet")
+
     purchase.save()
 
-    return render(request, 'payment.html', {'status': status, 'game': game })
+    r = render (
+        request,
+        'payment.html',
+        {
+            'page_title': 'Payment Status',
+            'page_subtitle': '',
+            'status': status,
+            'game': game
+        },
+        content_type='application/xhtml+xml'
+    )
 
+    return HttpResponse(r)
+
+# TODO: develop separate app for API to allow more versatile API architecture
 def api(request, target):
+    """API access for all endpoint.
+
+    Keyword arguments:
+    request -- the standard django request object
+    target -- target endpoint, it could game, user, gameplay or highscore
+    """
     output = {}
 
     if target == 'game':
@@ -612,7 +564,7 @@ def api(request, target):
     elif target == 'gameplay' or target == 'highscore':
         target_model = Gameplay
     else:
-        return HttpResponse('{}', content_type="application/json")
+        return HttpResponse('{}', content_type="application/json") # return empty json if targetting non existing endpoint
 
     if request.method == 'GET':
 
@@ -622,7 +574,7 @@ def api(request, target):
             objects = objects.filter(game_id=request.GET.get("game_id"), player_id=request.user.id).latest('timestamp')
 
         if target == 'highscore' and request.GET.get("game_id") is not None:
-            objects = objects.filter(game_id=request.GET.get("game_id")) #kml
+            objects = objects.filter(game_id=request.GET.get("game_id"))
             highscores = getHighscores(objects)
             output = highscores
 
@@ -678,11 +630,15 @@ def api(request, target):
                 raise Http404("Gameplay does not exist")
             except Exception as e:
                 return HttpResponse(e, content_type="application/json")
-
         else:
             return HttpResponse(target, content_type="application/json")
 
 def search(request):
+    """Search feature.
+
+    It takes 'keywords' query string as the keywords to be searched. Return list of games object which match the search.
+    """
+
     if(request.GET.get("keywords") is None):
         keywords_string = ''
     else:
@@ -692,15 +648,231 @@ def search(request):
     objects_list = []
     output = Game.objects.none()
 
+    # Retrieve game objects for every keywords
     for keyword in keywords:
         objects_list.append(Game.objects.filter(title__icontains=keyword))
         objects_list.append(Game.objects.filter(desc__icontains=keyword))
 
+    # Aggregate all the retrieved game objects
     for obj in objects_list:
         output = output | obj
 
+    # Convert the games object to games dictionary object to be passed to the template
     games = build_games_view(request, output)
 
     paginated_games = games_paginator(request, games, 9)
 
-    return render(request, 'search.html', {'games': paginated_games, 'page_title': keywords_string + " games", 'search_string': 'keywords='+keywords_string })
+    r = render (
+        request,
+        'search.html',
+        {
+            'page_title': keywords_string + " games",
+            'games': paginated_games,
+            'search_string': 'keywords='+keywords_string
+        },
+        content_type='application/xhtml+xml'
+    )
+    return HttpResponse(r)
+
+def load_games(request, mode="all", tags="", num=3):
+    """Return games dictionary object to be passed to the template.
+
+    Keyword arguments:
+    request -- the standard django request object
+    mode -- the kind of games list that want to be loaded, choose between all, featured, latest, top-grossing, most-played and tag
+    tags -- id of the tag, if the mode is set to tag, it will get this argument
+    num -- number of games to be loaded
+    """
+
+    try:
+        games = []
+        if mode == "all":
+            games_querysets = Game.objects.order_by('-added_date')
+        elif mode == "featured":
+            games_querysets = Game.objects.filter(is_featured=True)[:num]
+        elif mode == "latest":
+            games_querysets = Game.objects.all().order_by('-added_date')[:num]
+        elif mode == "top-grossing":
+            games_querysets = Game.objects.all().annotate(num_purchase=Count('purchase')).order_by('-num_purchase')
+        elif mode == "most-played":
+            games_querysets = Game.objects.all().annotate(num_gameplay=Count('gameplay')).order_by('-num_gameplay')
+        elif mode == "tag":
+            games_querysets = Game.objects.filter(taxonomies=tags)
+
+        games = build_games_view(request, games_querysets)
+
+        return games
+
+    except Game.DoesNotExist:
+        raise Http404("Game does not exist")
+
+def games_paginator(request, games, num_per_page):
+    """Build paginated games object to be used on the browse feature.
+
+    Keyword arguments:
+    request -- the standard django request object
+    games -- games list object to be paginated
+    num_per_page -- number of games to be shown per page
+    """
+    paginator = Paginator(games, num_per_page)
+
+    page = request.GET.get('page')
+
+    try:
+        paginated_games = paginator.page(page)
+    except PageNotAnInteger:
+        # If page is not an integer, deliver first page.
+        paginated_games = paginator.page(1)
+    except EmptyPage:
+        # If page is out of range (e.g. 9999), deliver last page of results.
+        paginated_games = paginator.page(paginator.num_pages)
+
+    return paginated_games
+
+def build_games_view(request, querysets):
+    """Build games dictionary object to be passed to the template.
+
+    Keyword arguments:
+    request -- the standard django request object
+    querysets -- the game querysets which will be converted to game dictionary data
+    """
+
+    # Get current logged in user owner games
+    user_owned_games = [];
+    if(request.user.is_authenticated()):
+        user_purchases = Purchase.objects.filter(buyer_id=request.user.id)
+        if user_purchases.exists():
+            for user_purchase in user_purchases:
+                user_owned_games.append(user_purchase.game_id)
+
+    output = []
+
+    for game in querysets:
+        game_banner_url = settings.BASE_URL+'/media/site/no-image-400x250.jpg';
+        for asset in game.asset_set.all():
+            if asset.asset_type == 'game-banner-400x250':
+                game_banner_url = asset.url
+                break
+
+        if game.id in user_owned_games:
+            game_bought = True
+        else:
+            game_bought = False
+
+        checksum = get_checksum(game.price)
+
+        output.append({
+            'id': game.id,
+            'title': game.title,
+            'price': game.price,
+            'desc': game.desc,
+            'slug': game.slug,
+            'banner_url': game_banner_url,
+            'bought': game_bought,
+            'checksum': checksum
+        })
+
+    return output
+
+def handle_uploaded_file(request, file, game):
+    """Move uploaded image for game banner to the corresponding folder and generate thumbnails.
+
+    Keyword arguments:
+    request -- the standard django request object
+    file -- the file object from the form
+    game -- game object to refer the file with its game id
+    """
+
+    folder = 'media/games/' + game.slug
+    original_filename, original_fileext = os.path.splitext(request.FILES['image'].name)
+    uploaded_filename = game.slug+"-banner-original-size"+original_fileext
+
+    # create the folder if it doesn't exist.
+    try:
+        os.mkdir(os.path.join(settings.BASE_DIR, folder))
+    except:
+        pass
+
+    # save the uploaded file inside that folder.
+    full_filename = os.path.join(settings.BASE_DIR, folder, uploaded_filename)
+    fout = io.open(full_filename, 'wb+')
+
+    # Iterate through the chunks.
+    for chunk in file.chunks():
+        fout.write(chunk)
+    fout.close()
+
+    generate_thumbnails(full_filename, game)
+
+def generate_thumbnails(filename, game):
+    """Generate thumbnails for newly submitted/updated game banner image.
+
+    Keyword arguments:
+    filename -- the filename of the the newly uploaded original image
+    game -- game object to refer the thumbnails with its game id
+    """
+
+    sizes = {
+        '128x128': (128, 128),
+        '400x250': (400, 250),
+        '750x400': (750, 400)
+    }
+
+    for key, size in sizes.items():
+        outfile = filename.replace('original-size', key)
+
+        try:
+            im = Image.open(filename)
+            thumb = ImageOps.fit(im, size, Image.ANTIALIAS)
+            thumb.save(outfile, "JPEG")
+
+            asset = Asset(asset_type='game-banner-'+key,url=outfile.replace(settings.BASE_DIR, ''), game_id=game.id)
+            asset.save()
+
+        except IOError:
+            print("cannot create thumbnail for")
+
+def next_purchase_id():
+    """Get the next purchase id to be used on buy form and included in checksum calculation."""
+
+    try:
+        purchase = Purchase.objects.latest('id')
+    except Purchase.DoesNotExist:
+        raise Http404("There is no purchase data yet")
+
+    next_purchase_id = int(purchase.id)+1;
+    return next_purchase_id
+
+def get_checksum(amount):
+    """Get checksum for buy form.
+
+    Keyword arguments:
+    amount -- the price of the product
+    """
+    checksumstr = "pid={}&sid={}&amount={}&token={}".format(next_purchase_id(), settings.SELLER_ID, amount, settings.PAYMENT_SECRET_KEY)
+    checksum = md5(checksumstr.encode("ascii")).hexdigest()
+    return checksum
+
+def getHighscores(gameplays):
+    """Get list of sorted highscores from a gameplay querysets."""
+
+    highscore = {}
+    play_count = 0
+
+    # Iterate through gameplay objects and extract the highscore from each player id
+    for gameplay in gameplays:
+        play_count += 1
+        if gameplay.score is not None:
+            if gameplay.player_id in highscore:
+                if gameplay.score > highscore[gameplay.player_id]:
+                    highscore[gameplay.player_id] = gameplay.score
+            else:
+                highscore[gameplay.player_id] = gameplay.score
+
+    # Replace the user id as the key on the highscore dictionary with username
+    highscore_output = {}
+    for key, score in highscore.items():
+        user = get_object_or_404(User, pk=int(key))
+        highscore_output[user.username] = highscore[key]
+
+    return sorted(highscore_output.items(), key=operator.itemgetter(1), reverse=True)

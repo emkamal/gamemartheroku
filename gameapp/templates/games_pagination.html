@@ -1,14 +1,17 @@
 <div class="row">
   <div class="col-md-6">
   </div>
+
+  <!--pagination-->
+
   <div class="col-md-6">
     <ul class="pagination pull-right">
       {% if games.has_previous %}
-        <li><a href="?page={{ games.previous_page_number }}&{{search}}">&laquo; previous</a></li>
+        <li><a href="?page={{ games.previous_page_number }}&{{search}}">&laquo; previous</a></li> <!--goes to previous page-->
       {% endif %}
-      <li class="disabled"><a href="#">Page {{ games.number }} of {{ games.paginator.num_pages }}</a></li>
+      <li class="disabled"><a href="#">Page {{ games.number }} of {{ games.paginator.num_pages }}</a></li> <!--displays page numbers-->
       {% if games.has_next %}
-        <li><a href="?page={{ games.next_page_number }}&{{search}}">next &raquo;</a></li>
+        <li><a href="?page={{ games.next_page_number }}&{{search}}">next &raquo;</a></li> <!-- goes to next page if available-->
       {% endif %}
     </ul>
   </div>

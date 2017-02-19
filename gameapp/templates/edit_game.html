@@ -9,10 +9,10 @@
           {% for field in form %}
               {% if field.errors %}
                   <div class="control-group error form-group">
-                      <label class="control-label">{{ field.label }}</label>
+                      <label class="control-label">{{ field.label }}</label> <!--insert label-->
                       <div class="">{{ field }}
                           <span class="help-inline">
-                              {% for error in  field.errors %}{{ error }}{% endfor %}
+                              {% for error in  field.errors %}{{ error }}{% endfor %} <!--handling errors-->
                           </span>
                       </div>
                   </div>
