@@ -1,0 +1,54 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <link rel="stylesheet" href="css/normalize.css">
+        <link rel="stylesheet" href="css/main.css">
+    </head>
+    <body>
+        <!--[if lte IE 9]>
+            <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
+        <![endif]-->
+
+        <!-- Add your site or application content here -->
+        <div id="gamePanel">
+          <div class="diceArea">
+            <button id="rollDiceButton">Roll the dice</button>
+            <button id="newGameButton">New game</button>
+            <div id="diceDropArea">
+              <div id="dice1"></div>
+              <div id="dice2"></div>
+            </div>
+          </div>
+
+          <div class="scoreArea">
+            <h3>Score</h3>
+            <p id="score">0</p>
+          </div>
+
+          <div class="gameplayArea">
+            <button id="submitScore">SubmitScore</button>
+            <button id="save">Save</button>
+            <button id="load">Load</button>
+          </div>
+        </div>
+        <div id="boardWrapper">
+          <div id="board"><canvas id="c" width="700" height="700"></canvas></div>
+          <div id="player" data-location='1'></div>
+        </div>
+
+
+
+
+        <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+        <script>window.jQuery || document.write('<script src="js/jquery.js"><\/script>')</script>
+        <script src="js/plugins.js"></script>
+        <script src="js/main.js"></script>
+
+        <!-- Google Analytics: change UA-XXXXX-Y to be your site's ID. -->
+        <script>
+            window.ga=function(){ga.q.push(arguments)};ga.q=[];ga.l=+new Date;
+            ga('create','UA-XXXXX-Y','auto');ga('send','pageview')
+        </script>
+        <script src="https://www.google-analytics.com/analytics.js" async defer></script>
+    </body>
+</html>

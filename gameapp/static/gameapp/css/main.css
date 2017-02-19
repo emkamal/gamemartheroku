@@ -269,7 +269,6 @@ td#bolded{
 .footer {
 	background: #EDEFF1;
 	height: auto;
-	padding-bottom: 30px;
 	position: relative;
 	width: 100%;
 	border-bottom: 1px solid #CCCCCC;
@@ -465,10 +464,10 @@ td#bolded{
 .mega-dropdown {
   position: static !important;
 }
-.navbar-nav .open .dropdown-menu.mega-dropdown-menu {
+.navbar-nav .dropdown-menu.mega-dropdown-menu {
   background: #eee;
-  width: 100%;
   max-width: 768px;
+  left: auto;
 }
 
 .mega-dropdown-menu  ul {
@@ -490,9 +489,6 @@ td#bolded{
   text-decoration: none;
 }
 @media screen and (min-width: 769px) {
-  .navbar-nav .open .dropdown-menu.mega-dropdown-menu {
-    left: auto
-  }
   .mega-dropdown-menu  ul  li  a {
     padding: 4px 8px;
     margin: 0 5px 9px 0;
@@ -509,27 +505,6 @@ td#bolded{
   background: #337ab7;
   padding: 15px;
 }
-
-.carousel-control {
-  width: 30px;
-  height: 30px;
-  top: -35px;
-
-}
-.left.carousel-control {
-  right: 30px;
-  left: inherit;
-}
-.carousel-control .glyphicon-chevron-left,
-.carousel-control .glyphicon-chevron-right {
-  font-size: 12px;
-  background-color: #fff;
-  line-height: 30px;
-  text-shadow: none;
-  color: #333;
-  border: 1px solid #ddd;
-}
-
 
 
 
@@ -658,4 +633,44 @@ td#bolded{
         text-align: right;
 		margin-top:10px;
  	}
+}
+
+
+
+/* messages */
+ul.messages {
+  margin:10px 100px;
+  padding:0;
+  list-style-type:
+  none;
+}
+ul.messages li.success,
+ul.messages li.warning,
+ul.messages li.error,
+ul.messages li.info {
+  margin:0;
+  padding:14px 20px;
+  list-style:none;
+  color:#fff;
+}
+ul.messages li.success { background:#81ce81; }
+ul.messages li.success a { color:#0ac33e; }
+ul.messages li.error { background:#a30029; color:#e9828e; }
+ul.messages li.error a { color:#e9828e; }
+ul.messages li.info { background:#faffae; color:#696b4e; }
+ul.messages li.info a { color:#1586de; }
+ul.messages li.warning { background:#de9404; }
+ul.messages li.warning a { color:#f49000; }
+ul.messages li a.close {
+  margin:0;
+  float:right;
+  opacity:1;
+  border:0;
+  box-shadow:none;
+  text-shadow:none;
+}
+.alert-error {
+    color: #a94442;
+    background-color: #f2dede;
+    border-color: #ebccd1;
 }

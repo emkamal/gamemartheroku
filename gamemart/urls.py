@@ -1,11 +1,10 @@
 """Gamemart URL Configuration"""
-from django.conf import settings
-from django.contrib import admin
 from django.conf.urls import url, include
 from django.conf.urls.static import static
+from django.conf import settings
+from django.contrib import admin
 from django.contrib.auth import views as auth_views
-from django.contrib.auth.views import (logout_then_login, password_reset, password_reset_done, password_reset_confirm, password_reset_complete)
-
+from django.contrib.auth.views import logout_then_login
 from gameapp import views
 
 urlpatterns = [

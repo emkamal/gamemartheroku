@@ -1,6 +1,23 @@
 $(document).ready(function(){
 
+  var docHeight = $(window).height();
+   var footerHeight = $('.footer').height();
+   var footerTop = $('.footer').position().top + footerHeight;
+
+   if (footerTop < docHeight) {
+    $('.footer').css('margin-top', (docHeight - footerTop)-2 + 'px');
+   }
+
   $("#submitgamesform").find('input, textarea, select').addClass('form-control');
+
+  $("#navsearchinput").on('keyup', function(e){
+    if($("#navsearchinput").val() == ''){
+      $("#navsearchbutton").attr('disabled', 'disabled');
+    }
+    else{
+      $("#navsearchbutton").removeAttr('disabled');
+    }
+  });
 
   $(".dropdown").hover(
       function() {
@@ -17,11 +34,13 @@ $(document).ready(function(){
     var $form = $('.navbar-collapse form[role="search"].active')
   	$form.find('input').val('');
 		$form.removeClass('active');
+    $("#navsearchbutton").removeAttr('disabled');
 	}
 
 	// Show Search if form is not active // event.preventDefault() is important, this prevents the form from submitting
 	$(document).on('click', '.navbar-collapse form[role="search"]:not(.active) button[type="submit"]', function(event) {
 		event.preventDefault();
+    $("#navsearchbutton").attr('disabled', 'disabled');
 		var $form = $(this).closest('form'),
 			$input = $form.find('input');
 		$form.addClass('active');
