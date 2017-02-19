@@ -34,30 +34,31 @@ ALLOWED_HOSTS = ["192.168.5.5", "127.0.0.1", "localhost"]
 
 
 # Application definition
+
 INSTALLED_APPS = [
 	'django.contrib.auth',
-	'django.contrib.contenttypes',
-	'django.contrib.sessions',
-	'django.contrib.messages',
-	'django.contrib.staticfiles',
-
-	#'social.apps.django_app.default',
-	# 'social_django',	'gameapp',
-	#'social.apps.django_app.default',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.messages',
+    'django.contrib.staticfiles',
+    'django.contrib.admin',
+    #'social.apps.django_app.default',
+    # 'social_django',
+    'gameapp',
+    #'social.apps.django_app.default',
 ]
 
 MIDDLEWARE = [
 	'django.middleware.security.SecurityMiddleware',
-	'django.contrib.sessions.middleware.SessionMiddleware',
-	'django.middleware.common.CommonMiddleware',
-	'django.middleware.csrf.CsrfViewMiddleware',
-	'django.contrib.auth.middleware.AuthenticationMiddleware',
-	'django.contrib.messages.middleware.MessageMiddleware',
-	'django.middleware.clickjacking.XFrameOptionsMiddleware',
-
-	# TODO: social middleware not working on production server
-	#'social.apps.django_app.middleware.SocialAuthExceptionMiddleware',
-	# 'social_django.middleware.SocialAuthExceptionMiddleware',
+    'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.common.CommonMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
+    'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
+    'django.contrib.messages.middleware.MessageMiddleware',
+    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    #'social.apps.django_app.middleware.SocialAuthExceptionMiddleware',
+    # 'social_django.middleware.SocialAuthExceptionMiddleware',
 ]
 
 ROOT_URLCONF = 'gamemart.urls'
@@ -75,13 +76,12 @@ TEMPLATES = [
 				'django.contrib.messages.context_processors.messages',
 				#'social.apps.django_app.context_processors.backends',
 				#'social.apps.django_app.context_processors.login_redirect',
+				# 'social_django.context_processors.backends',
 				# 'social_django.context_processors.login_redirect',
 			],
 		},
 	},
 ]
-
-# To access some global variable on the template
 TEMPLATES[0]['OPTIONS']['context_processors'].append("gameapp.context_processors.load_taxonomies")
 TEMPLATES[0]['OPTIONS']['context_processors'].append("gameapp.context_processors.load_config")
 TEMPLATES[0]['OPTIONS']['context_processors'].append("gameapp.context_processors.load_state")
@@ -90,8 +90,12 @@ WSGI_APPLICATION = 'gamemart.wsgi.application'
 
 AUTHENTICATION_BACKENDS = (
 	#'social.backends.github.GithubOAuth2',
-	#'social.backends.twitter.TwitterOAuth',
-	# 'social_core.backends.facebook.FacebookOAuth2',	'django.contrib.auth.backends.ModelBackend',
+    #'social.backends.twitter.TwitterOAuth',
+    # #'social.backends.facebook.FacebookOAuth2',
+    # 'social_core.backends.github.GithubOAuth2',
+    # 'social_core.backends.twitter.TwitterOAuth',
+    # 'social_core.backends.facebook.FacebookOAuth2',
+    'django.contrib.auth.backends.ModelBackend',
 )
 
 # Social auth settings
@@ -204,6 +208,3 @@ if "DYNO" in os.environ:
 
 	DEBUG = False # False, once service is succesfully deployed
 	ALLOWED_HOSTS = ['*']
-
-
-	
