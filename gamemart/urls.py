@@ -49,10 +49,7 @@ urlpatterns = [
     url(r'^game/delete/([0-9]+)/$', views.del_game, name='del_game'),
 
     url(r'^admin/', admin.site.urls),
+    url(r'^static/(?P<path>.*$', 'django.views.static.serve', {'document_root': settings.STATIC_ROOT}),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-
-urlpatterns += patterns('',
-    (r'^static/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.STATIC_ROOT}),
-)
