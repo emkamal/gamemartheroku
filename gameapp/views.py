@@ -1,11 +1,13 @@
 from django.http import HttpResponse, Http404
 from django.shortcuts import *
 from gameapp.forms import UserForm
+#from gameapp.forms import UsernameForm
 from gameapp.forms import FirstNameForm, LastNameForm, EmailForm, BioForm
 from gameapp.models import *
 from django.conf import settings
 from hashlib import md5
 from django.shortcuts import render
+#from django.contrib.auth import authenticate, login
 from .forms import SubmitForm
 #from .forms import LoginForm, SubmitForm
 from django.contrib.auth.decorators import login_required
@@ -43,9 +45,44 @@ def home(request):
 def dashboard(request):
     return render(request, 'account/dashboard.html', {'section':'dashboard', 'user':request.user})
 
-def editProfile(request):
-    return render(request, 'account/editProfile.html', {'user': request.user})
+#def editUsername(request):
+#    return render(request, 'account/editUsername.html', {'user': request.user})
 
+def editFirstName(request):
+    return render(request, 'account/editFirstName.html', {'user': request.user})
+
+def editLastName(request):
+    return render(request, 'account/editLastName.html', {'user': request.user})
+
+def editEmail(request):
+    return render(request, 'account/editEmail.html', {'user': request.user})
+
+def editBio(request):
+    return render(request, 'account/editBio.html', {'user': request.user})
+
+# def changeUsername(request):
+#     username_form = UsernameForm(request.POST or None, initial={'username': 'whatever'})
+#     error = ''
+#     if request.method == 'POST':
+#         if username_form.is_valid():
+#             user = request.user
+#             user_name = request.POST.get("username")
+#             try:
+#                 usernames = User.objects.get(username=user_name)
+#             except User.DoesNotExist:
+#                 usernames = None
+#
+#             if usernames is None:
+#                 user.username = user_name
+#                 user.save()
+#                 return redirect('home_page')
+#             else:
+#                 error = 'Username already in use'
+#
+#     else:
+#         username_form = UsernameForm()
+#
+#     return render(request, 'account/editUsername.html', {'username_form': username_form, 'error': error})
 
 def changeFirstName(request):
     first_name_form = FirstNameForm(request.POST or None, initial={'first_name': 'whatever'})
@@ -55,12 +92,11 @@ def changeFirstName(request):
             firstName = request.POST.get("first_name")
             user.first_name = firstName
             user.save()
-            return redirect('user_dashboard')
+            return redirect('home_page')
     else:
         first_name_form = FirstNameForm()
 
-    return render(request, 'account/editProfile.html', {'first_name_form': first_name_form})
-
+    return render(request, 'account/editFirstName.html', {'first_name_form': first_name_form})
 
 def changeLastName(request):
     last_name_form = LastNameForm(request.POST or None, initial={'last_name': 'whatever'})
@@ -70,12 +106,11 @@ def changeLastName(request):
             lastName = request.POST.get("last_name")
             user.last_name = lastName
             user.save()
-            return redirect('user_dashboard')
+            return redirect('home_page')
     else:
         last_name_form = LastNameForm()
 
-    return render(request, 'account/editProfile.html', {'last_name_form': last_name_form})
-
+    return render(request, 'account/editLastName.html', {'last_name_form': last_name_form})
 
 def changeEmail(request):
     email_form = EmailForm(request.POST or None, initial={'email': 'whatever'})
@@ -92,14 +127,14 @@ def changeEmail(request):
             if emails is None:
                 user.email = email
                 user.save()
-                return redirect('user_dashboard')
+                return redirect('home_page')
             else:
                 error = 'Email already in use'
 
     else:
         email_form = EmailForm()
 
-    return render(request, 'account/editProfile.html', {'email_form': email_form, 'error': error})
+    return render(request, 'account/editEmail.html', {'email_form': email_form, 'error': error})
 
 
 def changeBio(request):
@@ -110,7 +145,7 @@ def changeBio(request):
             bio = request.POST.get("bio")
             user.bio = bio
             user.save()
-            return redirect('user_dashboard')
+            return redirect('home_page')
     else:
         bio_form = BioForm()
 
@@ -557,26 +592,6 @@ def game_by_slug(request, slug):
             'purchase_count': purchases.count()
         }
     )
-
-def getHighscores(gameplays):
-    highscore = {}
-    play_count = 0
-    for gameplay in gameplays:
-        play_count += 1
-        if gameplay.score is not None:
-            if gameplay.player_id in highscore:
-                if gameplay.score > highscore[gameplay.player_id]:
-                    highscore[gameplay.player_id] = gameplay.score
-            else:
-                highscore[gameplay.player_id] = gameplay.score
-
-    highscore_output = {}
-    for key, score in highscore.items():
-        # user = get_object_or_404(User, id=int(key))
-        user = User.objects.get(pk=int(key))
-        highscore_output[user.username] = highscore[key]
-
-    return sorted(highscore_output.items(), key=operator.itemgetter(1), reverse=True)
 
 def payment(request, status, slug):
     game = get_object_or_404(Game, slug=slug)
