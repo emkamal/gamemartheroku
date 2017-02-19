@@ -183,6 +183,15 @@ LOGIN_REDIRECT_URL = 'home_page'
 PAYMENT_SECRET_KEY = '3195b7c7a372b31e6b1eaa8242f8dcfb';
 SELLER_ID = 'GameMartInc'
 
+# Email settings
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.aol.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'adgamemart'
+EMAIL_HOST_PASSWORD = 'myS3cr3tP@ssw0rd'
+EMAIL_USE_TLS = True
+DEFAULT_FROM_EMAIL = 'adgamemart@aol.com'
+
 # Only when running in Heroku
 if "DYNO" in os.environ:
 	# STATIC_ROOT = 'staticfiles'
@@ -194,13 +203,7 @@ if "DYNO" in os.environ:
 	DATABASES['default'] =  dj_database_url.config()
 
 	DEBUG = False # False, once service is succesfully deployed
-    ALLOWED_HOSTS = ['*']
+	ALLOWED_HOSTS = ['*']
 
-# Email settings
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.aol.com'
-EMAIL_PORT = 587
-EMAIL_HOST_USER = 'adgamemart'
-EMAIL_HOST_PASSWORD = 'myS3cr3tP@ssw0rd'
-EMAIL_USE_TLS = True
-DEFAULT_FROM_EMAIL = 'adgamemart@aol.com'
+
+	
